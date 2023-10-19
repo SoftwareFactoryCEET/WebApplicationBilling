@@ -14,6 +14,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+
+//builder.Services.AddControllersWithViews().AddViewOptions(options =>
+//{
+//    options.HtmlHelperOptions.ClientValidationEnabled = true;
+//});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -36,7 +36,7 @@ namespace WebApplicationBilling.Controllers
             }
 
             var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.SupplierId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (supplier == null)
             {
                 return NotFound();
@@ -56,8 +56,10 @@ namespace WebApplicationBilling.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SupplierId,CompanyName,ContactName,City,Country,Phone,Email")] Supplier supplier)
+        public async Task<IActionResult> Create([Bind("Id, CompanyName, ContactName, ContactTitle, City, Country, Phone, Email")] Supplier supplier)
         {
+            //supplier.Products = new List<Product>();
+
             if (ModelState.IsValid)
             {
                 _context.Add(supplier);
@@ -88,9 +90,9 @@ namespace WebApplicationBilling.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SupplierId,CompanyName,ContactName,City,Country,Phone,Email")] Supplier supplier)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyName,ContactName,ContactTitle,City,Country,Phone,Email")] Supplier supplier)
         {
-            if (id != supplier.SupplierId)
+            if (id != supplier.Id)
             {
                 return NotFound();
             }
@@ -104,7 +106,7 @@ namespace WebApplicationBilling.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SupplierExists(supplier.SupplierId))
+                    if (!SupplierExists(supplier.Id))
                     {
                         return NotFound();
                     }
@@ -127,7 +129,7 @@ namespace WebApplicationBilling.Controllers
             }
 
             var supplier = await _context.Suppliers
-                .FirstOrDefaultAsync(m => m.SupplierId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (supplier == null)
             {
                 return NotFound();
@@ -157,7 +159,7 @@ namespace WebApplicationBilling.Controllers
 
         private bool SupplierExists(int id)
         {
-          return (_context.Suppliers?.Any(e => e.SupplierId == id)).GetValueOrDefault();
+          return (_context.Suppliers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
